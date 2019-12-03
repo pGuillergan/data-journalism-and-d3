@@ -133,6 +133,19 @@ function visualize(theData){
     	.attr("r", circRadius)
     	.attr("class", function(d) {
       		return "stateCircle " + d.abbr;
-    	})
+		})
+		theCircles
+		.append("text")
+		.text(function(d) {
+		  return d.abbr;
+		})
+		.attr("dx", function(d) {
+		  return xScale(d[curX]);
+		})
+		.attr("dy", function(d) {
+		  return yScale(d[curY]) + circRadius / 2.5;
+		})
+		.attr("font-size", circRadius)
+		.attr("class", "stateText")
     
 }

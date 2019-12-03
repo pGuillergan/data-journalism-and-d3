@@ -94,4 +94,45 @@ function visualize(theData){
 		});		
 	}
 
+	xMinMax();
+  	yMinMax();
+
+  	var xScale = d3
+    	.scaleLinear()
+    	.domain([xMin, xMax])
+    	.range([margin + labelArea, width - margin]);
+  	var yScale = d3
+    	.scaleLinear()
+    	.domain([yMin, yMax])
+    	.range([height - margin - labelArea, margin]);
+
+    var xAxis = d3.axisBottom(xScale);
+  	var yAxis = d3.axisLeft(yScale);
+
+  	svg
+    	.append("g")
+    	.call(xAxis)
+    	.attr("class", "xAxis")
+    	.attr("transform", "translate(0," + (height - margin - labelArea) + ")");
+  	svg
+    	.append("g")
+    	.call(yAxis)
+    	.attr("class", "yAxis")
+    	.attr("transform", "translate(" + (margin + labelArea) + ", 0)");
+
+    var theCircles = svg.selectAll("g theCircles").data(theData).enter();
+
+    theCircles
+    	.append("circle")
+    	.attr("cx", function(d) {
+      		return xScale(d[curX]);
+    	})
+    	.attr("cy", function(d) {
+      		return yScale(d[curY]);
+    	})
+    	.attr("r", circRadius)
+    	.attr("class", function(d) {
+      		return "stateCircle " + d.abbr;
+    	})
+    
 }
